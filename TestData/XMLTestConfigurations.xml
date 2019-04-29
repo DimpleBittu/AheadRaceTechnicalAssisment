@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Credentials>
+  <userCredentialsOne>
+    <UserName>TechTestUser</UserName>
+    <Password>Qs5e8W4T</Password>
+    <IncorrectUserName>TestInvalidUser</IncorrectUserName>
+    <IncorrectPassword>TestInvalidPass</IncorrectPassword>
+  </userCredentialsOne>
+</Credentials>
