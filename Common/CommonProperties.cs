@@ -8,10 +8,6 @@ namespace AheadRaceTechnicalTest.Common
 {
     class CommonProperties
     {
-        public static string baseURL = "https://ondemand.questionmark.com/home/403160/";
-        public static string executionBrowser = "Chrome";
         public static IWebDriver commonDriver;
-        public static string strXMLFilePath = @"..\TestData\XMLTestConfigurations.xml";
-        public static string strGlobalusername, strGlobalPassword;
     }
 }

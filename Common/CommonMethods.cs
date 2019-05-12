@@ -1,7 +1,9 @@
-﻿using AheadRaceTechnicalTest.Core;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -14,9 +16,8 @@ namespace AheadRaceTechnicalTest.Common
         /// </summary>
         public static void reloadApplication()
         {
-            ReadXMLData.setXMLValues();
             CommonProperties.commonDriver.Navigate().Refresh();
-            CommonProperties.commonDriver.Navigate().GoToUrl(CommonProperties.baseURL);
+            CommonProperties.commonDriver.Navigate().GoToUrl(ConfigurationManager.AppSettings["baseURL"].ToString());
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace AheadRaceTechnicalTest.Common
         /// <param name="BrowserName"></param>
         public static void instantiateBrowser(string BrowserName)
         {
-            switch (CommonProperties.executionBrowser)
+            switch (BrowserName)
             {
                 //Case for Chrome Browser
                 case "chrome":
@@ -73,6 +74,31 @@ namespace AheadRaceTechnicalTest.Common
         public static void clickElement(OpenQA.Selenium.By Locator)
         {
             CommonProperties.commonDriver.FindElement(Locator).Click();
+        }
+
+        /// <summary>
+        /// Waiting till the element provided is loaded on the page.
+        /// </summary>
+        /// <param name="Locator">Element to wait for</param>
+        public static IWebElement waitUntilElementExist(OpenQA.Selenium.By Locator, int customtimeout)
+        {
+            try
+            {
+                var wait = new WebDriverWait(CommonProperties.commonDriver, TimeSpan.FromSeconds(customtimeout));
+                return wait.Until(ExpectedConditions.ElementExists(Locator));
+            }
+            catch (NoSuchElementException)
+            {
+                Console.WriteLine($"Element with locator: {Locator} was not found in current context page.");
+                throw;
+            }
+        }
+
+        public static void selectElement(string TextToSelect,By Locator)
+        {
+            var dropDownElement = CommonProperties.commonDriver.FindElement(Locator);
+            SelectElement sel = new SelectElement(dropDownElement);
+            sel.SelectByText(TextToSelect);
         }
     }
 }
